@@ -14,6 +14,17 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const cors = require('cors');
+
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://aquamarine-semolina-dd6e68.netlify.app'
+  ],
+  credentials: true
+}));
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -97,7 +108,7 @@ app.get("/api/auth/verify", authenticateToken, (req, res) => {
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  process.env.GOOGLE_REDIRECT_URI
+  process.env.REACT_APP_API_URL
 );
 
 // Token file path
